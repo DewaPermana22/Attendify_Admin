@@ -18,7 +18,7 @@ const TextComponent = ({ text, type = "paragraph", className }: Props) => {
     caption: "text-sm italic"
   };
 
-  return <p className={`${styles[type]} ${className}`} style={{ fontFamily: "'Poppins', sans-serif", color : color.text}}>{text}</p>;
+  return <p className={`${styles[type]} ${className}`} style={{ fontFamily: "'Poppins', sans-serif"}}>{text}</p>;
 };
 
 export default TextComponent;

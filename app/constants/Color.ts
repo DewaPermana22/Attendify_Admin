@@ -18,7 +18,7 @@ type ColorScheme = {
       background : themeNow === "dark" ? "#f1ebfc" : "#f5f5f5",
       primary : themeNow === "dark" ? "#f1ebfc" : "#FF725E",
       text_gray : "#6C757D",
-      text : "#252525",
+      text : themeNow === "dark" ? "#FFF5EE" : "#252525",
       hover_button : themeNow === "dark" ? "#0e315d" : "#83deff",
       hover_text : themeNow === "dark" ? "#1eabff" : "#0e315d",
       primaryLight100 : "#d6f2ff",

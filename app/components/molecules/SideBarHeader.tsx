@@ -26,24 +26,30 @@ const SideBarHeader = () => {
       <div className={`flex items-center transition-all duration-300 ease-in-out ${isOpen ? "flex-row" : "flex-col"}`}>
         <Image src={"/Logo.svg"} alt="Logo" width={40} height={40} className="transition-all ease-in-out duration-300" />
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className={`overflow-hidden transition-all duration-300 ${isOpen ? "w-auto opacity-100 ml-1" : "w-0 opacity-0"}`}>
-          <TextComponent type="subtitle" className="text-xl" text="Attendify" />
+          <TextComponent type="subtitle" className="text-xl text-text dark:text-textDark" text="Attendify" />
         </motion.div>
       </div>
 
-      <Tooltip title={isOpen ? "Minimize" : "Expand"} placement="bottomLeft" open={toolTip} onOpenChange={setToolTip}>
+      <Tooltip
+        title={isOpen ? "Minimize" : "Expand"}
+        placement="bottomLeft"
+        open={toolTip}
+        onOpenChange={setToolTip}
+      >
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onMouseEnter={() => setToolTip(true)}
-          onClick={() => dispatch(toggleSidebar())}
-          className="h-10 w-10 flex items-center justify-center transition-all bg-gray-200 ease-in-out duration-300 rounded-lg hover:bg-[#83deff] hover:text-[#0e315d] dark:hover:bg-[#0e315d] dark:hover:text-[#1eabff]"
-          style={{
-            color: color.text,
+          onClick={() => {
+            setToolTip(false);
+            dispatch(toggleSidebar());
           }}
+          className="h-10 w-10 flex items-center justify-center transition-all text-text dark:text-textDark dark:bg-gray-900 bg-gray-200 ease-in-out duration-300 rounded-lg hover:bg-[#83deff] hover:text-[#0e315d] dark:hover:bg-[#0e315d] dark:hover:text-[#1eabff]"
         >
           {isOpen ? <IoCloseCircleOutline className="text-2xl" /> : <IoMenu className="text-2xl" />}
         </motion.button>
       </Tooltip>
+
     </motion.div>
   );
 };

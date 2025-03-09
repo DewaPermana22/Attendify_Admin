@@ -3,31 +3,29 @@ import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import { combineReducers } from 'redux';
 import sidebarReducer from '../libs/features/sidebar/sidebarSlice';
+import themeReducer from '../libs/features/themes/themesSlice';
 
-// Konfigurasi Redux Persist
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['sidebar'], // Hanya state sidebar yang akan disimpan
+  whitelist: ['sidebar', 'theme'],
 };
 
-// Gabungkan reducers
 const rootReducer = combineReducers({
   sidebar: sidebarReducer,
+  theme : themeReducer
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// Buat store Redux
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Untuk menghindari warning dari Redux Persist
+      serializableCheck: false,
     }),
 });
 
-// Redux Persistor
 export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;

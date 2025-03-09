@@ -37,7 +37,7 @@ const SideBar: React.FC = () => {
   ];
 
   return (
-    <div className={`h-screen bg-white text-black ${isOpen ? 'w-[355px]' : 'w-[80px]'} transition-all duration-300 ease-in-out`}>
+    <div className={`h-screen border-r-2 dark:bg-darkBackground border-gray-200 dark:border-text shadow-sm bg-[#ffffff] text-black ${isOpen ? 'w-[355px]' : 'w-[80px]'} transition-all duration-300 ease-in-out`}>
       <SideBarHeader />
       <SidebarCategory category="Master">
         <SideBarMenu

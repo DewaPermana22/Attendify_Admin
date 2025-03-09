@@ -14,11 +14,14 @@ module.exports = {
     extend: {
       colors: {
         background: "#f1ebfc",
+        darkBackground : "#0F0F10",
+        darkCard: "#18181B",
         primary: "#FF725E",
         primaryLight700: "#0079FF",
         secondaryLight700 : "#f6169b", 
         text_gray: "#6C757D",
         text: "#252525",
+        textDark : "#f5f5f5",
         primaryLight950: "#0e315d",
         hover_text: "#1eabff",
         primaryLight100: "#d6f2ff",
