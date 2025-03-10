@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/libs/store';
 import { setActiveMenu } from '@/app/libs/features/sidebar/sidebarSlice';
@@ -6,12 +7,13 @@ import SideBarHeader from '../molecules/SideBarHeader';
 import SideBarMenu from '../Atoms/SideBarMenu';
 import { RiDashboardHorizontalFill, RiDashboardHorizontalLine, RiTaskFill, RiTaskLine } from 'react-icons/ri';
 import { HiMiniUsers, HiOutlineUsers } from 'react-icons/hi2';
-import { PiCurrencyCircleDollarFill, PiCurrencyCircleDollarLight } from 'react-icons/pi';
+import { PiCurrencyCircleDollarFill, PiCurrencyCircleDollarLight } from 'react-icons/pi'; 
 import { GoClock, GoClockFill } from 'react-icons/go';
 import { FaRegEnvelope, FaEnvelopeOpen } from 'react-icons/fa6';
 import { AiFillNotification, AiOutlineNotification } from 'react-icons/ai';
 import { IoSettingsOutline, IoSettingsSharp } from 'react-icons/io5';
 import SidebarCategory from '../Atoms/SidebarCategory';
+import { TbNumber123 } from "react-icons/tb";
 import { Switch } from 'antd';
 
 const SideBar: React.FC = () => {
@@ -23,7 +25,8 @@ const SideBar: React.FC = () => {
     { icon: RiDashboardHorizontalLine, activeIcon: RiDashboardHorizontalFill, title: "Dashboard" },
     { icon: HiOutlineUsers, activeIcon: HiMiniUsers, title: "Employees" },
     { icon: PiCurrencyCircleDollarLight, activeIcon: PiCurrencyCircleDollarFill, title: "Salary" },
-    { icon: RiTaskLine, activeIcon: RiTaskFill, title: "Task" }
+    { icon: RiTaskLine, activeIcon: RiTaskFill, title: "Task" },
+    { icon: TbNumber123, activeIcon: TbNumber123, title: "Referal Code" }
   ];
 
   const ManagementRegion = [
@@ -34,42 +37,53 @@ const SideBar: React.FC = () => {
 
   const SettingsRegion = [
     { icon: IoSettingsOutline, activeIcon: IoSettingsSharp, title: "Settings" }
-  ];
+  ];  
 
   return (
-    <div className={`h-screen border-r-2 dark:bg-darkBackground border-gray-200 dark:border-text shadow-sm bg-[#ffffff] text-black ${isOpen ? 'w-[355px]' : 'w-[80px]'} transition-all duration-300 ease-in-out`}>
+    <motion.div 
+      initial={{ width: 80 }} // Lebar awal
+      animate={{ width: isOpen ? 355 : 80 }} // Animasi buka tutup sidebar
+      transition={{ duration: 0.3, ease: "easeInOut" }}
+      className="h-screen border-r-2 dark:bg-darkBackground border-gray-200 dark:border-text shadow-sm bg-[#ffffff] text-black overflow-hidden"
+    >
       <SideBarHeader />
-      <SidebarCategory category="Master">
-        <SideBarMenu
-          isOpen={isOpen} 
-          category="Master"
-          menuItems={MasterRegion} 
-          active={activeMenu.category === "Master" ? activeMenu.index : null} 
-          setActive={(index) => dispatch(setActiveMenu({ category: "Master", index }))}
-        />
-      </SidebarCategory>
-      <SidebarCategory className='-translate-y-10' category="Management">
-        <SideBarMenu 
-          isOpen={isOpen}
-          category="Management" 
-          menuItems={ManagementRegion} 
-          active={activeMenu.category === "Management" ? activeMenu.index : null} 
-          setActive={(index) => dispatch(setActiveMenu({ category: "Management", index }))}
-        />
-      </SidebarCategory>
-      <SidebarCategory className='-translate-y-20' category='Settings'>
-        <SideBarMenu 
-          isOpen={isOpen}
-          category="Settings"
-          menuItems={SettingsRegion} 
-          active={activeMenu.category === "Settings" ? activeMenu.index : null} 
-          setActive={(index) => dispatch(setActiveMenu({ category: "Settings", index }))}
-        />
-      </SidebarCategory>
-      <div>
-        <Switch defaultChecked />
+      <div className="overflow-hidden">
+        <SidebarCategory category="Master">
+          <SideBarMenu
+            isOpen={isOpen} 
+            category="Master"
+            menuItems={MasterRegion} 
+            active={activeMenu.category === "Master" ? activeMenu.index : null} 
+            setActive={(index) => dispatch(setActiveMenu({ category: "Master", index }))}
+          />
+        </SidebarCategory>
+        <SidebarCategory category="Management">
+          <SideBarMenu 
+            isOpen={isOpen}
+            category="Management" 
+            menuItems={ManagementRegion} 
+            active={activeMenu.category === "Management" ? activeMenu.index : null} 
+            setActive={(index) => dispatch(setActiveMenu({ category: "Management", index }))}
+          />
+        </SidebarCategory>
+        <SidebarCategory category='Settings'>
+          <SideBarMenu 
+            isOpen={isOpen}
+            category="Settings"
+            menuItems={SettingsRegion} 
+            active={activeMenu.category === "Settings" ? activeMenu.index : null} 
+            setActive={(index) => dispatch(setActiveMenu({ category: "Settings", index }))}
+          />
+        </SidebarCategory>
       </div>
-    </div>
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.8 }} 
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.2 }}
+      >
+      <h1>Logout</h1>
+      </motion.div>
+    </motion.div>
   );
 };
 

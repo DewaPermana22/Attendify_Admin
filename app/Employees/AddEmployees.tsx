@@ -1,8 +1,16 @@
 "use client";
+import { useDispatch, useSelector } from "react-redux";
+import ButtonComponent from "../components/Atoms/Button";
+import HeaderContent from "../components/Atoms/HeaderContent";
 import { useUsers } from "../server/Hooks/useUsers";
+import { MdArrowBackIosNew } from "react-icons/md";
+import { setCustomMenu as setSidebarCustomMenu } from "../libs/features/sidebar/sidebarSlice";
+import { RootState } from "../libs/store";
+import FormAdd from "../components/ui/FormAdd";
 export default function AddEmployees() {
-  
-    const { data, error } = useUsers();
+  const dispatch = useDispatch();
+  const customMenu = useSelector((state: RootState) => state.sidebar.customMenu);
+  const { data, error } = useUsers();
 
     console.log("Users Data:", data);
     console.log("Error:", error);
@@ -11,10 +19,17 @@ export default function AddEmployees() {
     if (!data || data.length === 0) return <div>Loading...</div>;
 
     return (
-        <ul>
-            {data.map((user : any) => (
-                <li key={user.id}>{user.fullname}</li>
-            ))}
-        </ul>
+      <>
+      <div className="flex items-center justify-between">
+        <HeaderContent title="Add Employees" subtitle="Add New Employee" />
+        <div>
+        <ButtonComponent clicked={() => customMenu && dispatch(setSidebarCustomMenu(null))} icon={MdArrowBackIosNew} text="Back" />
+        </div>
+       </div>
+
+       {/* Form */}
+       <FormAdd />
+      </>
+       
     );
 }

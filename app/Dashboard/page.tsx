@@ -3,7 +3,7 @@ import React from 'react'
 function page() {
   return (
     <div>
-        <Title level={3}>Dashboard</Title>
+      
     </div>
   )
 }

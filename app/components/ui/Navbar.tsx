@@ -3,12 +3,15 @@ import React from 'react'
 import { HiOutlineBellAlert } from 'react-icons/hi2'
 import Profile from '../molecules/Profile';
 import { Switch, Tooltip } from 'antd';
+import Image from 'next/image';
 import { LuMoonStar } from "react-icons/lu";
 import { AiFillSun } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/app/libs/store';
 import { iconDark } from '@/app/libs/features/themes/themesSlice';
 import {motion} from 'framer-motion'
+import TextComponent from '../Atoms/Text';
+import CompanyProfile from '../molecules/CompanyProfile';
 
 
 type Props = {}
@@ -26,7 +29,9 @@ const Navbar = (props: Props) => {
 
   return (
     <div className='flex items-center pb-3 bg-white dark:bg-darkBackground justify-between'>
-        <div></div>
+        <div className='flex items-center gap-3'>
+          <CompanyProfile name="Shadewa Group" uuid="78201264"/>
+        </div>
         <div className='flex items-center gap-10'>
             <div className='flex items-center gap-5'>
                <Tooltip  placement="bottom" title={setDark ? "Light Mode" : "Night Mode"}>

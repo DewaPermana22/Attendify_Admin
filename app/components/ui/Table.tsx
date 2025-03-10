@@ -5,18 +5,20 @@ import ColumnTable from "../Atoms/ColumnTable";
 import SearchBar from "../Atoms/SearchBar";
 import DataContent from "../Atoms/dataContent";
 import RowContent from "../molecules/RowContent";
-import Link from "next/link";
 import LinkText from "../Atoms/LinkText";
 import CheckBox from "../Atoms/checkBox";
-import { Dropdown } from "../Dropdown";
-import { Button, Skeleton } from "antd";
-import { IoIosArrowDown, IoIosArrowDropdown } from "react-icons/io";
-
+import { Skeleton } from "antd";
+import Button from "../Atoms/Button";
+import { useDispatch } from "react-redux";
+import { setCustomMenu } from "@/app/libs/features/sidebar/sidebarSlice";
+import addEmployees from "@/app/Employees/AddEmployees"
+import { AiOutlineUserAdd } from "react-icons/ai";
 const TableUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const dispatch = useDispatch();
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
+  const navToAddEmployees = () => {
+    dispatch(setCustomMenu(addEmployees));
   };
 
   const { data, isLoading, error } = useUsers();
@@ -28,10 +30,7 @@ const TableUI = () => {
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <div className="flex items-center justify-between flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900 p-7">
         <div>
-          <Button className="bg-black" onClick={toggleDropdown} type="primary" icon={<IoIosArrowDropdown className="w-2.5 h-2.5 ml-2" />}>Action</Button>
-          {isDropdownOpen && (
-            <Dropdown />
-          )}
+          <Button icon={AiOutlineUserAdd} clicked={navToAddEmployees} text="Add Employee"/>
         </div>
 
         <SearchBar placeholder="Search for users" />
@@ -84,19 +83,11 @@ const TableUI = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log("Users Data:", data);  
-  console.log("Error:", error);
-  console.log( "Tipe Data :",  typeof data);
-
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div className="flex items-center justify-between flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900 p-7">
         <div>
-        <Button onClick={toggleDropdown} type="primary" icon={<IoIosArrowDropdown className="w-2.5 h-2.5 ml-2" />}>Action</Button>
-
-          {isDropdownOpen && (
-            <Dropdown />
-          )}
+        <Button icon={AiOutlineUserAdd} clicked={navToAddEmployees} text="Add Employee"/>
         </div>
 
         <SearchBar placeholder="Search for users" />
