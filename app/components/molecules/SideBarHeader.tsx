@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoCloseCircleOutline, IoMenu } from "react-icons/io5";
 import TextComponent from "../Atoms/Text";
 import { Tooltip } from "antd";
@@ -10,10 +10,23 @@ import { RootState } from "@/app/libs/store";
 import { toggleSidebar } from "@/app/libs/features/sidebar/sidebarSlice";
 
 const SideBarHeader = () => {
-  const color = UseColor();
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.sidebar.isOpen);
   const [toolTip, setToolTip] = useState(false);
+
+  useEffect(() => {
+    const sortcut = (event : KeyboardEvent) => {
+      if(event.key === "["){
+        dispatch(toggleSidebar())
+      }
+    };
+
+    window.addEventListener("keydown", sortcut);
+
+    return () => {
+      window.removeEventListener("keydown", sortcut);
+    }
+  }, [dispatch])
 
   return (
     <motion.div
@@ -31,7 +44,7 @@ const SideBarHeader = () => {
       </div>
 
       <Tooltip
-        title={isOpen ? "Minimize" : "Expand"}
+        title={isOpen ? "Collapse / [" : "Expand / ["}
         placement="bottomLeft"
         open={toolTip}
         onOpenChange={setToolTip}

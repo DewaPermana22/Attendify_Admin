@@ -48,7 +48,7 @@ const Navbar = (props: Props) => {
                 className='text-text dark:text-textDark' />
              </Tooltip>
             </div>
-            <Profile/>
+            <Profile name='Dewa Permana' email='example@gmail.com'/>
         </div>
     </div>
   )

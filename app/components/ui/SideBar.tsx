@@ -14,7 +14,6 @@ import { AiFillNotification, AiOutlineNotification } from 'react-icons/ai';
 import { IoSettingsOutline, IoSettingsSharp } from 'react-icons/io5';
 import SidebarCategory from '../Atoms/SidebarCategory';
 import { TbNumber123 } from "react-icons/tb";
-import { Switch } from 'antd';
 
 const SideBar: React.FC = () => {
   const dispatch = useDispatch();
@@ -41,8 +40,8 @@ const SideBar: React.FC = () => {
 
   return (
     <motion.div 
-      initial={{ width: 80 }} // Lebar awal
-      animate={{ width: isOpen ? 355 : 80 }} // Animasi buka tutup sidebar
+      initial={{ width: 80 }}
+      animate={{ width: isOpen ? 355 : 80 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
       className="h-screen border-r-2 dark:bg-darkBackground border-gray-200 dark:border-text shadow-sm bg-[#ffffff] text-black overflow-hidden"
     >

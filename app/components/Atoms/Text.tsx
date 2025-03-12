@@ -10,7 +10,6 @@ type Props = {
 };
 
 const TextComponent = ({ text, type = "paragraph", className }: Props) => {
-    const color = UseColor();
     const styles: Record<TextType, string> = {
     title: "text-3xl font-bold",
     subtitle: "text-2xl font-semibold",
