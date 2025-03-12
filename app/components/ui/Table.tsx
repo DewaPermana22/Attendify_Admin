@@ -11,7 +11,7 @@ import { Skeleton } from "antd";
 import Button from "../Atoms/Button";
 import { useDispatch } from "react-redux";
 import { setCustomMenu } from "@/app/libs/features/sidebar/sidebarSlice";
-import addEmployees from "@/app/Employees/AddEmployees"
+import addEmployees from "@/app/Pages/Employees/AddEmployees"
 import { AiOutlineUserAdd } from "react-icons/ai";
 const TableUI = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);

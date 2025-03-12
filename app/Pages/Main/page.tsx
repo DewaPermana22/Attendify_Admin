@@ -1,12 +1,12 @@
 'use client'
 
 import React from 'react'
-import SideBar from '../components/ui/SideBar'
-import Navbar from '../components/ui/Navbar'
+import SideBar from '../../components/ui/SideBar'
+import Navbar from '../../components/ui/Navbar'
 import { useSelector } from 'react-redux'
-import { RootState } from '../libs/store'
-import { MenuRegions } from '../constants/RegionMenu'
-import BreadCrumbsComponent from '../components/Atoms/BreadCrumbs'
+import { RootState } from '../../libs/store'
+import { MenuRegions } from '../../constants/RegionMenu'
+import BreadCrumbsComponent from '../../components/Atoms/BreadCrumbs'
 
 const Page = () => {
   const activeMenu = useSelector((state: RootState) => state.sidebar.activeMenu);

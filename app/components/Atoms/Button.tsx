@@ -5,7 +5,7 @@ import { AiOutlineUserAdd } from 'react-icons/ai'
 type Props = {
   text : string
   clicked : () => void
-  icon : IconType
+  icon? : IconType
 }
 
 const ButtonComponent = (props: Props) => {

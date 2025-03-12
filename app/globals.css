@@ -43,3 +43,10 @@ body {
   color: var(--foreground); */
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* CSS untuk WebKit Browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+

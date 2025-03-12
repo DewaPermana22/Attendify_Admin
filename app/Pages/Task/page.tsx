@@ -1,9 +1,9 @@
 import React from 'react'
-import HeaderContent from '../components/Atoms/HeaderContent'
-import CardComponent from '../components/Card'
-import ButtonComponent from '../components/Atoms/Button'
+import HeaderContent from '../../components/Atoms/HeaderContent'
+import CardComponent from '../../components/ui/Card'
+import ButtonComponent from '../../components/Atoms/Button'
 import { TbSortDescending2Filled } from "react-icons/tb";
-import SearchBar from '../components/Atoms/SearchBar';
+import SearchBar from '../../components/Atoms/SearchBar';
 
 type Props = {}
 

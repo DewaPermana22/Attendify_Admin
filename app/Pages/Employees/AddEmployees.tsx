@@ -1,12 +1,13 @@
 "use client";
 import { useDispatch, useSelector } from "react-redux";
-import ButtonComponent from "../components/Atoms/Button";
-import HeaderContent from "../components/Atoms/HeaderContent";
-import { useUsers } from "../server/Hooks/useUsers";
+import ButtonComponent from "../../components/Atoms/Button";
+import HeaderContent from "../../components/Atoms/HeaderContent";
+import { useUsers } from "../../server/Hooks/useUsers";
 import { MdArrowBackIosNew } from "react-icons/md";
-import { setCustomMenu as setSidebarCustomMenu } from "../libs/features/sidebar/sidebarSlice";
-import { RootState } from "../libs/store";
-import FormAdd from "../components/ui/FormAdd";
+import { setCustomMenu as setSidebarCustomMenu } from "../../libs/features/sidebar/sidebarSlice";
+import { RootState } from "../../libs/store";
+import FormAdd from "../../components/ui/FormAdd";
+import { RequestUsers } from "@/app/components/molecules/RequestUsers";
 export default function AddEmployees() {
   const dispatch = useDispatch();
   const customMenu = useSelector((state: RootState) => state.sidebar.customMenu);
@@ -21,14 +22,13 @@ export default function AddEmployees() {
     return (
       <>
       <div className="flex items-center justify-between">
-        <HeaderContent title="Add Employees" subtitle="Add New Employee" />
+        <HeaderContent title="Membership Approval" subtitle="Accept or Decline New Member Applications" />
         <div>
         <ButtonComponent clicked={() => customMenu && dispatch(setSidebarCustomMenu(null))} icon={MdArrowBackIosNew} text="Back" />
         </div>
        </div>
 
-       {/* Form */}
-       <FormAdd />
+      <RequestUsers/>
       </>
        
     );

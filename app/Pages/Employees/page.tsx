@@ -1,6 +1,6 @@
 import React from 'react'
-import TableUI from '../components/ui/Table'
-import Pagination from '../components/ui/Pagination'
+import TableUI from '../../components/ui/Table'
+import Pagination from '../../components/ui/Pagination'
 
 const page = () => {
   return (

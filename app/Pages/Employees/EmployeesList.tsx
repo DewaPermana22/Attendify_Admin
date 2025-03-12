@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import TableUI from '../components/ui/Table';
-import UseColor from '../constants/Color';
+import TableUI from '../../components/ui/Table';
+import UseColor from '../../constants/Color';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 const App: React.FC = () => {
   const Color = UseColor();

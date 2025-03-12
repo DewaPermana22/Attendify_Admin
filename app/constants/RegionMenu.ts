@@ -1,12 +1,14 @@
-import Dashboard from "@/app/Dashboard/page";
-import ManageEmploye from "@/app/Employees/page";
-import Salary from "@/app/Salary/page";
-import Task from "@/app/Task/page";
-import Settings from "@/app/Settings/page";
-import Attedance from "@/app/Attedance/page";
-import Letters from "@/app/Letters/page";
-import Announcement from "@/app/Announcement/page";
-import ReferalCode from "@/app/ReferalCode/page";
+import Dashboard from "@/app/Pages/Dashboard/page";
+import ManageEmploye from "@/app/Pages/Employees/page";
+import Salary from "@/app/Pages/Salary/page";
+import Task from "@/app/Pages/Task/page";
+import GeneralSettings from "@/app/Pages/General/GeneralSettings/page";
+import AccountSettings from "@/app/Pages/General/AccountSettings/page";
+import GroupChat from "@/app/Pages/General/GroupChat/page";
+import Attedance from "@/app/Pages/Attedance/page";
+import Letters from "@/app/Pages/Letters/page";
+import Announcement from "@/app/Pages/Announcement/page";
+import ReferalCode from "@/app/Pages/ReferalCode/page";
 
 export const MasterRegion = [
   { title: "Dashboard", component: Dashboard, path: "dashboard" },
@@ -22,12 +24,14 @@ export const ManagementRegion = [
   { title: "Announcement", component: Announcement, path: "announcement" }
 ];
    
-export const SettingsRegion = [
-  { title: "Settings", component: Settings, path: "settings" }
+export const GeneralRegion = [
+  { title: "Group Chat", component: GroupChat, path: "GroupChat" },
+  { title: "General Settings", component: GeneralSettings, path: "GeneralSettings" },
+  { title: "Account Settings", component: AccountSettings, path: "AccountSettings" },
 ];
  
 export const MenuRegions = {
   Master: MasterRegion,
   Management: ManagementRegion,
-  Settings: SettingsRegion,
+  General: GeneralRegion,
 };

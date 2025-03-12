@@ -6,10 +6,12 @@ import { setActiveMenu } from '@/app/libs/features/sidebar/sidebarSlice';
 import SideBarHeader from '../molecules/SideBarHeader';
 import SideBarMenu from '../Atoms/SideBarMenu';
 import { RiDashboardHorizontalFill, RiDashboardHorizontalLine, RiTaskFill, RiTaskLine } from 'react-icons/ri';
-import { HiMiniUsers, HiOutlineUsers } from 'react-icons/hi2';
+import { HiMiniUsers, HiOutlineUserCircle, HiOutlineUsers } from 'react-icons/hi2';
 import { PiCurrencyCircleDollarFill, PiCurrencyCircleDollarLight } from 'react-icons/pi'; 
 import { GoClock, GoClockFill } from 'react-icons/go';
-import { FaRegEnvelope, FaEnvelopeOpen } from 'react-icons/fa6';
+import { HiOutlineChat, HiChat } from "react-icons/hi";
+import { BiSolidUserCircle } from "react-icons/bi";
+import { FaRegEnvelope, FaEnvelopeOpen, FaRegUser, FaUser } from 'react-icons/fa6';
 import { AiFillNotification, AiOutlineNotification } from 'react-icons/ai';
 import { IoSettingsOutline, IoSettingsSharp } from 'react-icons/io5';
 import SidebarCategory from '../Atoms/SidebarCategory';
@@ -34,8 +36,10 @@ const SideBar: React.FC = () => {
     { icon: AiOutlineNotification, activeIcon: AiFillNotification, title: "Announcement" }
   ];
 
-  const SettingsRegion = [
-    { icon: IoSettingsOutline, activeIcon: IoSettingsSharp, title: "Settings" }
+  const GeneralRegion = [
+    { icon: HiOutlineChat, activeIcon: HiChat, title: "Group Chat" },
+    { icon: IoSettingsOutline, activeIcon: IoSettingsSharp, title: "General Settings" },
+    { icon: HiOutlineUserCircle, activeIcon: BiSolidUserCircle, title: "Account Settings" }
   ];  
 
   return (
@@ -43,10 +47,11 @@ const SideBar: React.FC = () => {
       initial={{ width: 80 }}
       animate={{ width: isOpen ? 355 : 80 }}
       transition={{ duration: 0.3, ease: "easeInOut" }}
-      className="h-screen border-r-2 dark:bg-darkBackground border-gray-200 dark:border-text shadow-sm bg-[#ffffff] text-black overflow-hidden"
+      className="h-screen border-r-2 dark:bg-darkBackground border-gray-200 dark:border-text shadow-sm bg-[#ffffff] 
+      text-black"
     >
       <SideBarHeader />
-      <div className="overflow-hidden">
+      <div className="max-h-screen">
         <SidebarCategory category="Master">
           <SideBarMenu
             isOpen={isOpen} 
@@ -56,6 +61,7 @@ const SideBar: React.FC = () => {
             setActive={(index) => dispatch(setActiveMenu({ category: "Master", index }))}
           />
         </SidebarCategory>
+        <div className='relative -top-12'>
         <SidebarCategory category="Management">
           <SideBarMenu 
             isOpen={isOpen}
@@ -65,13 +71,24 @@ const SideBar: React.FC = () => {
             setActive={(index) => dispatch(setActiveMenu({ category: "Management", index }))}
           />
         </SidebarCategory>
-        <SidebarCategory category='Settings'>
+        </div>
+        <div className='relative -top-24'>
+        <SidebarCategory category='General'>
           <SideBarMenu 
             isOpen={isOpen}
-            category="Settings"
-            menuItems={SettingsRegion} 
-            active={activeMenu.category === "Settings" ? activeMenu.index : null} 
-            setActive={(index) => dispatch(setActiveMenu({ category: "Settings", index }))}
+            category="General"
+            menuItems={GeneralRegion} 
+            active={activeMenu.category === "General" ? activeMenu.index : null} 
+            setActive={(index) => dispatch(setActiveMenu({ category: "General", index }))}/>
+        </SidebarCategory>
+        </div>
+        <SidebarCategory category='General'>
+          <SideBarMenu 
+            isOpen={isOpen}
+            category="General"
+            menuItems={GeneralRegion} 
+            active={activeMenu.category === "General" ? activeMenu.index : null} 
+            setActive={(index) => dispatch(setActiveMenu({ category: "General", index }))}
           />
         </SidebarCategory>
       </div>

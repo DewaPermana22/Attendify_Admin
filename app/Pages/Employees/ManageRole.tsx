@@ -1,5 +1,5 @@
 import React from 'react'
-import TableUI from '../components/ui/Table'
+import TableUI from '../../components/ui/Table'
 
 const ManageRole = () => {
   return (
