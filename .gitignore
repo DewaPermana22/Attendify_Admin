@@ -10,12 +10,20 @@
 !.yarn/releases
 !.yarn/versions
 
+.next-env.d.ts
+.next-config.ts
+
 # testing
 /coverage
 
 # next.js
 /.next/
 /out/
+
+*.config.js
+*.config.mjs
+*.json
+
 
 # production
 /build
