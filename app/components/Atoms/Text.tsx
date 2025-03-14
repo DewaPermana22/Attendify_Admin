@@ -14,6 +14,7 @@ const TextComponent = ({ text, type = "paragraph", className }: Props) => {
     title: "text-3xl font-bold",
     subtitle: "text-2xl font-semibold",
     paragraph: "text-base font-normal",
+    
     caption: "text-sm italic"
   };
 

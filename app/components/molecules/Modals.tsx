@@ -12,9 +12,12 @@ const ModalsComponent = ({ isOpen, onClose, children }: ModalProps) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+      const target = event.target as HTMLElement;
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)
+        && !(event.target as HTMLElement).closest("input, textarea, button, select, option"))
+       {
         onClose();
-      }
+       }
     };
 
     if (isOpen) {
@@ -37,15 +40,12 @@ const ModalsComponent = ({ isOpen, onClose, children }: ModalProps) => {
         >
           <motion.div
             ref={modalRef}
-            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-96 relative"
+            className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-[800px] h-[400px] relative"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
           >
-            <button onClick={onClose} className="absolute top-2 right-2 text-gray-500 hover:text-gray-700">
-              ✖
-            </button>
             {children}
           </motion.div>
         </motion.div>

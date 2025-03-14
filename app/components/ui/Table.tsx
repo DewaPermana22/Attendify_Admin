@@ -24,10 +24,17 @@ const TableUI = () => {
     dispatch(setCustomMenu(addEmployees));
   };
 
+ 
   const [openModals, setOpenModasl] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [userID, setUserID] = useState<number | null>(null);
 
-  const { data, isLoading, error } = useUsers();
+  const { data: users = [], isLoading, error } = useUsers();
+
+  const handleEdit = (id : number) => {
+    setUserID(id);
+    setOpenModalEdit(true);
+  }
 
   if (isLoading) {
     return (
@@ -111,16 +118,16 @@ const TableUI = () => {
           </tr>
         </thead>
         <tbody>
-          {data.map((user: { id: string; name: string; email: string; role?: { name: string }; division: { name: string }; department: { name: string } }) => (
+          {users?.map((user : any) => (
             <tr
               key={user.id}
-              className="bg-white border-b dark:bg-zinc-900 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-900"
-            >
+              className="bg-white border-b dark:bg-zinc-900 dark:border-gray-700
+               hover:bg-gray-200 dark:hover:bg-gray-900">
               <CheckBox />
               <th className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                 {/* <img className="w-10 h-10 rounded-full" src="" alt={user.name} /> */}
                 <div className="pl-3">
-                  <div className="text-base font-semibold">{user.name}</div>
+                  <div className="text-base font-semibold">{user.fullname}</div>
                   <div className="font-normal text-gray-500">{user.email}</div>
                 </div>
               </th>
@@ -130,17 +137,14 @@ const TableUI = () => {
               <DataContent>
                 <div className="flex gap-5">
                   <Tooltip title="Edit" placement="topLeft" color="blue">
-                  <RiPencilFill onClick={() => setOpenModalEdit(true)} className="text-primaryLight700 cursor-pointer" size={25}/>
+                  <RiPencilFill onClick={() => handleEdit(user.id)} className="text-primaryLight700 cursor-pointer" size={25}/>
                   </Tooltip>
-
-                  <ModalsEdit Open={openModalEdit} Close={() => setOpenModalEdit(false)}/>
-
+                  <ModalsEdit Open={openModalEdit} Close={() => setOpenModalEdit(false)}
+                  userID={userID ?? 0}/>
                   <Tooltip title="Delete" className="text-red-700 cursor-pointer" placement="topLeft" color="red">
                       <FaRegTrashAlt onClick={() => setOpenModasl(true)} size={23}/>
                   </Tooltip>
-
                     <Alert isOpen={openModals} onClose={() => setOpenModasl(false)}/>
-                      
                 </div>
               </DataContent>
             </tr>
