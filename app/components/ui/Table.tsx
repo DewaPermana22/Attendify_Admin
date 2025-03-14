@@ -5,25 +5,29 @@ import ColumnTable from "../Atoms/ColumnTable";
 import SearchBar from "../Atoms/SearchBar";
 import DataContent from "../Atoms/dataContent";
 import RowContent from "../molecules/RowContent";
-import LinkText from "../Atoms/LinkText";
+import Alert from "@/app/components/ui/Alert";
 import CheckBox from "../Atoms/checkBox";
-import { Skeleton } from "antd";
+import { Skeleton, Tooltip } from "antd";
 import Button from "../Atoms/Button";
 import { useDispatch } from "react-redux";
 import { setCustomMenu } from "@/app/libs/features/sidebar/sidebarSlice";
 import addEmployees from "@/app/Pages/Employees/AddEmployees"
 import { AiOutlineUserAdd } from "react-icons/ai";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { RiPencilFill } from "react-icons/ri";
+import ModalsComponent from "../molecules/Modals";
+import ModalsEdit from "./ModalsEdit";
 const TableUI = () => {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dispatch = useDispatch();
 
   const navToAddEmployees = () => {
     dispatch(setCustomMenu(addEmployees));
   };
 
-  const { data, isLoading, error } = useUsers();
+  const [openModals, setOpenModasl] = useState(false);
+  const [openModalEdit, setOpenModalEdit] = useState(false);
 
-  console.log(data);
+  const { data, isLoading, error } = useUsers();
 
   if (isLoading) {
     return (
@@ -87,17 +91,17 @@ const TableUI = () => {
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <div className="flex items-center justify-between flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900 p-7">
         <div>
-        <Button icon={AiOutlineUserAdd} clicked={navToAddEmployees} text="Add Employee"/>
+        <Button color="Primary" icon={AiOutlineUserAdd} clicked={navToAddEmployees} text="Add Employee"/>
         </div>
 
         <SearchBar placeholder="Search for users" />
       </div>
 
-      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <table className="w-full text-md text-left text-gray-500 dark:text-gray-400">
+        <thead className="text-xs text-text dark:text-textDark uppercase bg-gray-50 dark:bg-gray-800">
           <tr>
             <th className="p-4">
-              <input type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600" />
+              <input type="checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:bg-gray-900 dark:border-gray-600" />
             </th>
             <ColumnTable text="Name" />
             <ColumnTable text="Position" />
@@ -110,7 +114,7 @@ const TableUI = () => {
           {data.map((user: { id: string; name: string; email: string; role?: { name: string }; division: { name: string }; department: { name: string } }) => (
             <tr
               key={user.id}
-              className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+              className="bg-white border-b dark:bg-zinc-900 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-900"
             >
               <CheckBox />
               <th className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
@@ -124,7 +128,20 @@ const TableUI = () => {
               <RowContent text={user.division.name} />
               <RowContent text={user.department.name} />
               <DataContent>
-                <LinkText text="Edit User" />
+                <div className="flex gap-5">
+                  <Tooltip title="Edit" placement="topLeft" color="blue">
+                  <RiPencilFill onClick={() => setOpenModalEdit(true)} className="text-primaryLight700 cursor-pointer" size={25}/>
+                  </Tooltip>
+
+                  <ModalsEdit Open={openModalEdit} Close={() => setOpenModalEdit(false)}/>
+
+                  <Tooltip title="Delete" className="text-red-700 cursor-pointer" placement="topLeft" color="red">
+                      <FaRegTrashAlt onClick={() => setOpenModasl(true)} size={23}/>
+                  </Tooltip>
+
+                    <Alert isOpen={openModals} onClose={() => setOpenModasl(false)}/>
+                      
+                </div>
               </DataContent>
             </tr>
           ))}
