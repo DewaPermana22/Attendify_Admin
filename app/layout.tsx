@@ -7,6 +7,7 @@ import { Provider, useSelector } from 'react-redux'
 import { store, persistor, RootState } from './libs/store'
 import { PersistGate } from 'redux-persist/integration/react'
 import { motion, useSpring, useTransform } from 'framer-motion'
+import Head from 'next/head'
 
 // Konfigurasi Font
 const inter = Inter({ 
@@ -26,6 +27,9 @@ export default function RootLayout({ children }: PropsWithChildren<{}>) {
 
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <Head>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+      </Head>
       <body>
         <QueryClientProvider client={queryClient}>
           <Provider store={store}>

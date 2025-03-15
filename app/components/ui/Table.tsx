@@ -123,7 +123,9 @@ const TableUI = () => {
               key={user.id}
               className="bg-white border-b dark:bg-zinc-900 dark:border-gray-700
                hover:bg-gray-200 dark:hover:bg-gray-900">
-              <CheckBox />
+                <td className="w-4 p-4">
+                <CheckBox />
+                </td>
               <th className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                 {/* <img className="w-10 h-10 rounded-full" src="" alt={user.name} /> */}
                 <div className="pl-3">
