@@ -10,19 +10,27 @@ import CheckBox from "../Atoms/checkBox";
 import ButtonComponent from "../Atoms/Button";
 import { FaGoogle } from "react-icons/fa6";
 import OTPModal from "./ModalsOTP";
+import { sendOTP } from "@/app/server/Hooks/useOtpAuth";
 
 export function FormSignIn() {
     const [isOTPVisible, setOTPVisible] = useState(false);
+    const [email, setEmail] = useState("");
 
-    // Fungsi untuk menampilkan modal OTP
-    const toggleOTPModal = () => {
+    const toggleOTPModal = async () => {
         setOTPVisible(true);
+
+        // Kirim email ke backend
+        const send = await sendOTP({
+            email : email,
+            companyName : "Attendify"
+        });
     };
+
 
     return (
         <form className="flex max-w-lg flex-col gap-3">
             <InputComponent type="text" placeholder={"Enter Your Name"} icon={LuCircleUserRound} label='Nama' />
-            <InputComponent type="email" placeholder={"email@example.com"} icon={MdOutlineAlternateEmail} label='Email' />
+            <InputComponent onchange={(e : any) => setEmail(e.target.value)} type="email" placeholder={"email@example.com"} icon={MdOutlineAlternateEmail} label='Email' />
             <InputComponent type="password" placeholder={"Enter Password"} icon={RiShieldKeyholeLine} label='Password' />
             <InputComponent type="password" placeholder={"Confirm Password"} label='Confirm Password' />
 
@@ -46,8 +54,9 @@ export function FormSignIn() {
                 <LinkText text="Forgot password?" />
             </div>
 
-            {/* Modal OTP akan muncul hanya jika isOTPVisible = true */}
-            {isOTPVisible && <OTPModal isOpen={isOTPVisible} onClose={() => setOTPVisible(false)} />}
+            {isOTPVisible && <OTPModal 
+            email={email} onVerifySuccess={() => setOTPVisible(false)} 
+            isOpen={isOTPVisible} onClose={() => setOTPVisible(false)} />}
         </form>
     );
 }

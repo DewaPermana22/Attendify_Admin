@@ -3,12 +3,26 @@
 import TextComponent from '@/app/components/Atoms/Text';
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import { verifyOTP } from '@/app/server/Hooks/useOtpAuth';
 
-const OTPModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
+interface OTPModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  email : string
+  onVerifySuccess: () => void;
+}
+
+const OTPModal: React.FC<OTPModalProps> = ({ isOpen, onClose, email, onVerifySuccess }) => {
   const [otp, setOtp] = useState(Array(6).fill(''));
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [countdown, setCountdown] = useState(60);
   const [isResendDisabled, setIsResendDisabled] = useState(true);
+  const [error, setError] = useState('');
+
+  const verify = async () => {
+    
+  }
 
   useEffect(() => {
     if (isOpen) {
@@ -27,33 +41,22 @@ const OTPModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void })
     }
   }, [countdown, isResendDisabled]);
 
-interface OTPModalProps {
-    isOpen: boolean;
-    onClose: () => void;
-}
-
-interface HandleChangeEvent {
-    target: {
-        value: string;
-    };
-}
-
-const handleChange = (index: number, value: string) => {
+  const handleChange = (index: number, value: string) => {
     if (/^\d*$/.test(value)) {
-        const newOtp = [...otp];
-        newOtp[index] = value.substring(0, 1);
-        setOtp(newOtp);
-        if (value && index < 5) {
-            inputRefs.current[index + 1]?.focus();
-        }
+      const newOtp = [...otp];
+      newOtp[index] = value.substring(0, 1);
+      setOtp(newOtp);
+      if (value && index < 5) {
+        inputRefs.current[index + 1]?.focus();
+      }
     }
-};
+  };
 
-const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
-        inputRefs.current[index - 1]?.focus();
+      inputRefs.current[index - 1]?.focus();
     }
-};
+  };
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -75,18 +78,37 @@ const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) 
     setIsResendDisabled(true);
   };
 
-  const handleVerify = () => {
-    const otpValue = otp.join('');
-    if (otpValue.length === 6) {
-      console.log('Verifying OTP:', otpValue);
+  const handleVerify = async() => {
+    try {
+      const otpValue = otp.join('');
+      const res = await verifyOTP(email, otpValue);
+      if (res.succes) {
+        onVerifySuccess();
+        onClose();
+      } else {
+        setError(res.message);
+      }
+    } catch (error) {
+      setError('Terjadi kesalahan saat memverifikasi OTP.');
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75">
-      <div className="flex flex-col w-full max-w-md bg-white dark:bg-darkCard p-10 rounded-2xl shadow-2xl">
+    <motion.div 
+      className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-75"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      <motion.div 
+        className="flex flex-col w-full max-w-md bg-white dark:bg-darkCard p-10 rounded-2xl shadow-2xl"
+        initial={{ scale: 0.8 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.8 }}
+        transition={{ duration: 0.3 }}
+      >
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center">
             <Image src="/Logo.svg" alt="Attendify Logo" width={40} height={40} className="mr-2" />
@@ -100,7 +122,7 @@ const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) 
 
         <div className="flex justify-center gap-2 mb-8">
           {otp.map((digit, index) => (
-            <input
+            <motion.input
               key={index}
               ref={el => { inputRefs.current[index] = el; }}
               type="text"
@@ -108,12 +130,17 @@ const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) 
               onChange={(e) => handleChange(index, e.target.value)}
               onKeyDown={(e) => handleKeyDown(index, e)}
               onPaste={index === 0 ? handlePaste : undefined}
-              className="w-12 h-14 text-center text-xl font-bold border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+              className="w-12 transition-all duration-200 ease-in-out h-14 text-center text-xl font-bold border border-gray-300 dark:border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
               maxLength={1}
+              initial={{ scale: 1 }}
+              animate={{ scale: digit ? [1.2, 1] : 1 }}
+              transition={{ type: "spring", stiffness: 300 }}
             />
           ))}
         </div>
 
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        
         <button
           onClick={handleVerify}
           disabled={otp.join('').length !== 6}
@@ -132,8 +159,8 @@ const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) 
             {isResendDisabled ? `Resend code in ${countdown}s` : 'Resend code'}
           </button>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

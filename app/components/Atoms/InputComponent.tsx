@@ -10,6 +10,7 @@ type Props = {
   icon?: IconType | null
   placeholder: string | null
   type: string
+  onchange? : (e : any) => void
 }
 
 const InputComponent = (props: Props) => {
@@ -26,7 +27,8 @@ const InputComponent = (props: Props) => {
             <props.icon size={25} />
           </span>
         )}
-        <input 
+        <input
+          onChange={props.onchange}
           type={props.type === "password" && !showPassword ? "password" : "text"} 
           id="website-admin"
           className={`rounded-lg ${props.icon ? 'rounded-s-none' : 'rounded-lg'} bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0
