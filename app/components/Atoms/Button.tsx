@@ -7,6 +7,7 @@ type Props = {
   icon?: IconType
   color?: "Primary" | "Warning" | "Disabled" | "Danger" | any
   className?: string
+  type?: "button" | "submit"
 }
 
 const colors: { [key in Props['color']]?: string } = {
@@ -20,7 +21,7 @@ const ButtonComponent = (props: Props) => {
   return (
     <button
       onClick={props.clicked}
-      type="button"
+      type={props.type || "button"}
       className={`px-3 py-2 text-sm font-medium text-center inline-flex items-center 
       rounded-lg focus:outline-none 
       ${props.color ? colors[props.color] : colors.Primary} ${props.className || ''}`}

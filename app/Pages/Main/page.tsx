@@ -1,18 +1,31 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import SideBar from '../../components/ui/SideBar'
 import Navbar from '../../components/ui/Navbar'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../libs/store'
 import { MenuRegions } from '../../constants/RegionMenu'
 import BreadCrumbsComponent from '../../components/Atoms/BreadCrumbs'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const Page = () => {
   const activeMenu = useSelector((state: RootState) => state.sidebar.activeMenu);
   const isSidebarOpen = useSelector((state: RootState) => state.sidebar.isOpen);
   const customPage = useSelector((state: RootState) => state.sidebar.customMenu);
-  
+  const router = useRouter();
+  const { data: session, status } = useSession();
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/');
+    }
+  }, [status, router]);
+
+  if (status === 'loading') {
+    return <div>loading......</div>
+  }
   const { category, index } = activeMenu;
   const activeRegion = MenuRegions[category as keyof typeof MenuRegions] ?? [];
 

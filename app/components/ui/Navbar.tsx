@@ -1,5 +1,5 @@
 import UseColor from '@/app/constants/Color';
-import React from 'react'
+import React, { useState } from 'react'
 import { HiOutlineBellAlert } from 'react-icons/hi2'
 import Profile from '../molecules/Profile';
 import { Switch, Tooltip } from 'antd';
@@ -12,6 +12,7 @@ import { iconDark } from '@/app/libs/features/themes/themesSlice';
 import {motion} from 'framer-motion'
 import TextComponent from '../Atoms/Text';
 import CompanyProfile from '../molecules/CompanyProfile';
+import { useSession } from 'next-auth/react';
 
 
 type Props = {}
@@ -21,6 +22,8 @@ const Navbar = (props: Props) => {
     const dispatch = useDispatch();
     const [rotateIcon, setRotateIcon] = React.useState(false);
     const color = UseColor();
+    const {data : session, status} = useSession();
+
 
     const clickedTheme = () => {
         dispatch(iconDark());
@@ -48,7 +51,7 @@ const Navbar = (props: Props) => {
                 className='text-text dark:text-textDark' />
              </Tooltip>
             </div>
-            <Profile name='Dewa Permana' email='example@gmail.com'/>
+            <Profile name={session?.user?.name ?? ''} email={session?.user?.email ?? ''}/>
         </div>
     </div>
   )

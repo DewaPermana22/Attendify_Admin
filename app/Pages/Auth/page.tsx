@@ -3,6 +3,7 @@ import Image from 'next/image';
 import TextComponent from '@/app/components/Atoms/Text';
 import { FormSignIn } from '@/app/components/ui/FormSignIn';
 import ModalsOTP from '@/app/components/ui/ModalsOTP';
+import {signIn} from 'next-auth/react'
 
 const Page = () => {
   return (

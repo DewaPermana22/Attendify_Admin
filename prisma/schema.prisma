@@ -8,50 +8,66 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// datasource db {
+//   provider = "mysql"
+//   url      = env("DATABASE_URL")
+// }
+
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "mongodb"
+  url      = env("MONGO_DB")
 }
 
-model referral_code {
-  id  Int @id @default(autoincrement())
-  code String @unique
-  users users[]
+model User {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?
+  fullname  String?
+  email     String  @unique
+  password  String?
+  image     String?
+  provider  String
+  createdAt DateTime @default(now())
 }
 
-model role {
-  id Int @id @default(autoincrement())
-  name String @unique
-  users users[]
-}
+// model referral_code {
+//   id  Int @id @default(autoincrement())
+//   code String @unique
+//   users users[]
+// }
+
+// model role {
+//   id Int @id @default(autoincrement())
+//   name String @unique
+//   users users[]
+// }
 
 
-model division {
-  id Int @id @default(autoincrement())
-  name String @unique
-  users users[]
-}
+// model division {
+//   id Int @id @default(autoincrement())
+//   name String @unique
+//   users users[]
+// }
 
-model department {
-  id Int @id @default(autoincrement())
-  name String @unique
-  users users[]
-}
+// model department {
+//   id Int @id @default(autoincrement())
+//   name String @unique
+//   users users[]
+// }
 
 
-model users {
-  id Int @id @default(autoincrement())
-  name String
-  fullname String
-  referral referral_code @relation(fields: [referral_id], references: [id])
-  referral_id Int @unique
-  division division @relation(fields: [division_id], references: [id])
-  division_id Int
-  department department @relation(fields: [department_id], references: [id])
-  department_id Int
-  role role @relation(fields: [role_id], references: [id])
-  role_id Int
-  email String
-  password String 
-}
+// model users {
+//   id Int @id @default(autoincrement())
+//   name String
+//   fullname String
+//   referral referral_code @relation(fields: [referral_id], references: [id])
+//   referral_id Int @unique
+//   division division @relation(fields: [division_id], references: [id])
+//   division_id Int
+//   department department @relation(fields: [department_id], references: [id])
+//   department_id Int
+//   role role @relation(fields: [role_id], references: [id])
+//   role_id Int
+//   email String
+//   password String 
+// }
 
